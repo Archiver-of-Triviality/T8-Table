@@ -230,7 +230,7 @@ Polaris-Win64-Shipping.exe+585D7C2: E8 59 25 F7 FB           - call Polaris-Win6
 </AssemblerScript>
     </CheatEntry>
     <CheatEntry>
-      <ID>620</ID>
+      <ID>1337027869</ID>
       <Description>"Info"</Description>
       <Options moAlwaysHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
       <VariableType>Auto Assembler Script</VariableType>
@@ -239,10 +239,11 @@ Polaris-Win64-Shipping.exe+585D7C2: E8 59 25 F7 FB           - call Polaris-Win6
 // 80 BB 66 09 00 00 00 old
 // 80 BB C0 09 00 00 00 new
 // 80 BB D8 09 00 00 00 74 09 C7 47 2C 06 00 00 00
+// 80 BB F8 09 00 00 00 74 09 C7 47 2C 06 00 00 00
 
 ///////// Animation info and frame data
 
-aobscanmodule(pcFinder,Polaris-Win64-Shipping.exe,80 BB D8 09 00 00 00) // should be unique
+aobscanmodule(pcFinder,Polaris-Win64-Shipping.exe,80 BB F8 09 00 00 00) // should be unique
 alloc(newmem,$1000,pcFinder)
 
 label(code)
@@ -258,7 +259,7 @@ newmem:
   mov [pcFinderPTR],rbx // 92D offset = Power Crush Value
 
 code:
-  cmp byte ptr [rbx+000009D8],00
+  cmp byte ptr [rbx+000009F8],00
   jmp return
 
 
@@ -275,7 +276,7 @@ registersymbol(pcFinder)
 [DISABLE]
 
 pcFinder:
-  db 80 BB D8 09 00 00 00
+  db 80 BB F8 09 00 00 00
 
 unregistersymbol(pcFinder)
 dealloc(newmem)
@@ -312,7 +313,7 @@ Polaris-Win64-Shipping.exe+19495AB: 83 F8 1E              - cmp eax,1E
 </AssemblerScript>
       <CheatEntries>
         <CheatEntry>
-          <ID>1337027822</ID>
+          <ID>1337027871</ID>
           <Description>"Display Move Data"</Description>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{$lua}
@@ -422,17 +423,17 @@ local t = createTimer(f)
 t.Interval = 1 -- Update every 1 millisecond
 t.OnTimer = function()
   -- Read the values from memory with error handling
-  local topValue = readInteger('[pcFinderPTR]+370') or 0 -- Value to display at the top (Anim Timer)
-  local valuePCFinder = readInteger('[pcFinderPTR]+5B4') or 0 -- Total Recovery Frames
-  local valueLAF = readInteger('[[pcFinderPTR]+3B8]+15C') or 0 -- Last Active Frame (LAF)
-  local valueJS = readInteger('[[pcFinderPTR]+3B8]+124') or 0 -- js start
-  local jsEnd = readInteger('[[pcFinderPTR]+3B8]+128') or 0 -- js end
-  local delay = readInteger('[pcFinderPTR]+2388') or 0 -- Delay Value
+  local topValue = readInteger('[pcFinderPTR]+390') or 0 -- Value to display at the top (Anim Timer)
+  local valuePCFinder = readInteger('[pcFinderPTR]+5D4') or 0 -- Total Recovery Frames
+  local valueLAF = readInteger('[[pcFinderPTR]+3E0]+15C') or 0 -- Last Active Frame (LAF)
+  local valueJS = readInteger('[[pcFinderPTR]+3E0]+124') or 0 -- js start
+  local jsEnd = readInteger('[[pcFinderPTR]+3E0]+128') or 0 -- js end
+  local delay = readInteger('[pcFinderPTR]+23F8') or 0 -- Delay Value
   local cs = readInteger('csPTR') or 0 -- Read the cs status
-  local pc = readBytes('[pcFinderPTR]+9D8', 1, false) or 0 -- Read the pc status as a byte
+  local pc = readBytes('[pcFinderPTR]+9F8', 1, false) or 0 -- Read the pc status as a byte
 
   -- Read the transition value from memory
-  local transition = readInteger('[[pcFinderPTR]+3B8]+5C+70') or 0 -- Transition address
+  local transition = readInteger('[[pcFinderPTR]+3E0]+5C+70') or 0 -- Transition address
 
   -- Calculate the Recovery value (recv) by subtracting LAF from Total Recovery Frames
   local result = valuePCFinder - valueLAF
@@ -548,7 +549,7 @@ end
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
-          <ID>621</ID>
+          <ID>1337027870</ID>
           <Description>"Crouch Status Finder"</Description>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
@@ -622,38 +623,38 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
 </AssemblerScript>
           <CheatEntries>
             <CheatEntry>
-              <ID>1337027828</ID>
+              <ID>1337027872</ID>
               <Description>"Animation +A8"</Description>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>pcFinderPTR</Address>
               <Offsets>
-                <Offset>3B8</Offset>
+                <Offset>3E0</Offset>
               </Offsets>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027829</ID>
+              <ID>1337027873</ID>
               <Description>"Anim Length"</Description>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>pcFinderPTR</Address>
               <Offsets>
                 <Offset>120</Offset>
-                <Offset>3B8</Offset>
+                <Offset>3E0</Offset>
               </Offsets>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027830</ID>
+              <ID>1337027874</ID>
               <Description>"Anim Timer"</Description>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>pcFinderPTR</Address>
               <Offsets>
-                <Offset>370</Offset>
+                <Offset>390</Offset>
               </Offsets>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027831</ID>
+              <ID>1337027875</ID>
               <Description>"Crouch Status"</Description>
               <DropDownList DisplayValueAsItem="1">0:Standing
 1:Crouching
@@ -663,7 +664,7 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
               <Address>csPTR</Address>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027832</ID>
+              <ID>1337027876</ID>
               <Description>"Damage"</Description>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
@@ -671,31 +672,31 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
               <Offsets>
                 <Offset>8</Offset>
                 <Offset>68+A8</Offset>
-                <Offset>3B8</Offset>
+                <Offset>3E0</Offset>
               </Offsets>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027833</ID>
+              <ID>1337027877</ID>
               <Description>"Accurate Damage"</Description>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>pcFinderPTR</Address>
               <Offsets>
-                <Offset>4E4</Offset>
+                <Offset>504</Offset>
               </Offsets>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027812</ID>
+              <ID>1337027878</ID>
               <Description>"MoveID"</Description>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>pcFinderPTR</Address>
               <Offsets>
-                <Offset>51C+A8</Offset>
+                <Offset>548</Offset>
               </Offsets>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027813</ID>
+              <ID>1337027879</ID>
               <Description>"Transition*"</Description>
               <DropDownList DisplayValueAsItem="1">32769:Standing
 32770:FC
@@ -705,33 +706,33 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
               <Address>pcFinderPTR</Address>
               <Offsets>
                 <Offset>5C+70</Offset>
-                <Offset>3B8</Offset>
+                <Offset>3E0</Offset>
               </Offsets>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027814</ID>
+              <ID>1337027880</ID>
               <Description>"Animation*"</Description>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>pcFinderPTR</Address>
               <Offsets>
                 <Offset>18+70</Offset>
-                <Offset>3B8</Offset>
+                <Offset>3E0</Offset>
               </Offsets>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027815</ID>
+              <ID>1337027881</ID>
               <Description>"HitReaction*"</Description>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>pcFinderPTR</Address>
               <Offsets>
                 <Offset>68+A8</Offset>
-                <Offset>3B8</Offset>
+                <Offset>3E0</Offset>
               </Offsets>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027816</ID>
+              <ID>1337027882</ID>
               <Description>"Damage/Pushback*"</Description>
               <Options moHideChildren="1"/>
               <ShowAsSigned>0</ShowAsSigned>
@@ -740,11 +741,11 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
               <Offsets>
                 <Offset>8</Offset>
                 <Offset>68+A8</Offset>
-                <Offset>3B8</Offset>
+                <Offset>3E0</Offset>
               </Offsets>
               <CheatEntries>
                 <CheatEntry>
-                  <ID>1337027817</ID>
+                  <ID>1337027883</ID>
                   <Description>"Damage"</Description>
                   <ShowAsSigned>0</ShowAsSigned>
                   <VariableType>2 Bytes</VariableType>
@@ -756,7 +757,7 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
                   </Offsets>
                 </CheatEntry>
                 <CheatEntry>
-                  <ID>1337027818</ID>
+                  <ID>1337027884</ID>
                   <Description>"Front Pushback"</Description>
                   <ShowAsSigned>0</ShowAsSigned>
                   <VariableType>2 Bytes</VariableType>
@@ -769,7 +770,7 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
                   </Offsets>
                 </CheatEntry>
                 <CheatEntry>
-                  <ID>1337027819</ID>
+                  <ID>1337027885</ID>
                   <Description>"Back Pushback"</Description>
                   <ShowAsSigned>0</ShowAsSigned>
                   <VariableType>2 Bytes</VariableType>
@@ -784,29 +785,29 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
               </CheatEntries>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027834</ID>
+              <ID>1337027886</ID>
               <Description>"Total Animation Start Frame"</Description>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>pcFinderPTR</Address>
               <Offsets>
                 <Offset>74+A8</Offset>
-                <Offset>3B8</Offset>
+                <Offset>3E0</Offset>
               </Offsets>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027821</ID>
+              <ID>1337027887</ID>
               <Description>"Total Animation End Frame"</Description>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>pcFinderPTR</Address>
               <Offsets>
                 <Offset>78+A8</Offset>
-                <Offset>3B8</Offset>
+                <Offset>3E0</Offset>
               </Offsets>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027820</ID>
+              <ID>1337027888</ID>
               <Description>"Airborne Start"</Description>
               <ShowAsSigned>0</ShowAsSigned>
               <Color>008000</Color>
@@ -814,11 +815,11 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
               <Address>pcFinderPTR</Address>
               <Offsets>
                 <Offset>7C+A8</Offset>
-                <Offset>3B8</Offset>
+                <Offset>3E0</Offset>
               </Offsets>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027835</ID>
+              <ID>1337027889</ID>
               <Description>"Airborne End"</Description>
               <ShowAsSigned>0</ShowAsSigned>
               <Color>000080</Color>
@@ -826,22 +827,22 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
               <Address>pcFinderPTR</Address>
               <Offsets>
                 <Offset>80+A8</Offset>
-                <Offset>3B8</Offset>
+                <Offset>3E0</Offset>
               </Offsets>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027836</ID>
+              <ID>1337027890</ID>
               <Description>"Ground Fall"</Description>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>pcFinderPTR</Address>
               <Offsets>
                 <Offset>84+A8</Offset>
-                <Offset>3B8</Offset>
+                <Offset>3E0</Offset>
               </Offsets>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027837</ID>
+              <ID>1337027891</ID>
               <Description>"Hit Level"</Description>
               <DropDownList DisplayValueAsItem="1">1298:high
 535:mid
@@ -861,11 +862,11 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
               <Address>pcFinderPTR</Address>
               <Offsets>
                 <Offset>34</Offset>
-                <Offset>3B8</Offset>
+                <Offset>3E0</Offset>
               </Offsets>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027838</ID>
+              <ID>1337027892</ID>
               <Description>"First Active Frame"</Description>
               <Options moRecursiveSetValue="1" moAlwaysHideChildren="1" moAllowManualCollapseAndExpand="1"/>
               <ShowAsSigned>0</ShowAsSigned>
@@ -873,11 +874,11 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
               <Address>pcFinderPTR</Address>
               <Offsets>
                 <Offset>B0+A8</Offset>
-                <Offset>3B8</Offset>
+                <Offset>3E0</Offset>
               </Offsets>
               <CheatEntries>
                 <CheatEntry>
-                  <ID>1337027839</ID>
+                  <ID>1337027893</ID>
                   <Description>"First Active Frame 2"</Description>
                   <ShowAsSigned>0</ShowAsSigned>
                   <VariableType>4 Bytes</VariableType>
@@ -890,7 +891,7 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
               </CheatEntries>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027840</ID>
+              <ID>1337027894</ID>
               <Description>"Last Active Frame"</Description>
               <Options moRecursiveSetValue="1" moAlwaysHideChildren="1" moAllowManualCollapseAndExpand="1"/>
               <ShowAsSigned>0</ShowAsSigned>
@@ -898,11 +899,11 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
               <Address>pcFinderPTR</Address>
               <Offsets>
                 <Offset>B4+A8</Offset>
-                <Offset>3B8</Offset>
+                <Offset>3E0</Offset>
               </Offsets>
               <CheatEntries>
                 <CheatEntry>
-                  <ID>1337027841</ID>
+                  <ID>1337027895</ID>
                   <Description>"Last Active Frame 2"</Description>
                   <ShowAsSigned>0</ShowAsSigned>
                   <VariableType>4 Bytes</VariableType>
@@ -915,7 +916,7 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
               </CheatEntries>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027842</ID>
+              <ID>1337027896</ID>
               <Description>"Power Crush Bool"</Description>
               <DropDownList DisplayValueAsItem="1">0:None
 1:Power Crush
@@ -924,39 +925,39 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
               <VariableType>Byte</VariableType>
               <Address>pcFinderPTR</Address>
               <Offsets>
-                <Offset>9D8</Offset>
+                <Offset>9F8</Offset>
               </Offsets>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027843</ID>
+              <ID>1337027897</ID>
               <Description>"Total Recovery Frames"</Description>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>pcFinderPTR</Address>
               <Offsets>
-                <Offset>5B4</Offset>
+                <Offset>5D4</Offset>
               </Offsets>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027844</ID>
+              <ID>1337027898</ID>
               <Description>"Delay Frames"</Description>
               <ShowAsSigned>0</ShowAsSigned>
               <Color>000080</Color>
               <VariableType>4 Bytes</VariableType>
               <Address>pcFinderPTR</Address>
               <Offsets>
-                <Offset>2388</Offset>
+                <Offset>23F8</Offset>
               </Offsets>
             </CheatEntry>
             <CheatEntry>
-              <ID>1337027845</ID>
+              <ID>1337027899</ID>
               <Description>"P2"</Description>
               <Options moHideChildren="1"/>
               <Color>804000</Color>
               <GroupHeader>1</GroupHeader>
               <CheatEntries>
                 <CheatEntry>
-                  <ID>1337027846</ID>
+                  <ID>1337027900</ID>
                   <Description>"Animation"</Description>
                   <ShowAsSigned>0</ShowAsSigned>
                   <VariableType>4 Bytes</VariableType>
@@ -966,7 +967,7 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
                   </Offsets>
                 </CheatEntry>
                 <CheatEntry>
-                  <ID>1337027847</ID>
+                  <ID>1337027901</ID>
                   <Description>"Hit Level"</Description>
                   <Options moRecursiveSetValue="1" moAlwaysHideChildren="1"/>
                   <ShowAsSigned>0</ShowAsSigned>
@@ -978,7 +979,7 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
                   </Offsets>
                   <CheatEntries>
                     <CheatEntry>
-                      <ID>1337027848</ID>
+                      <ID>1337027902</ID>
                       <Description>"First Active Frame 2"</Description>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>4 Bytes</VariableType>
@@ -991,7 +992,7 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
                   </CheatEntries>
                 </CheatEntry>
                 <CheatEntry>
-                  <ID>1337027849</ID>
+                  <ID>1337027903</ID>
                   <Description>"First Active Frame"</Description>
                   <Options moRecursiveSetValue="1" moAlwaysHideChildren="1"/>
                   <ShowAsSigned>0</ShowAsSigned>
@@ -1003,7 +1004,7 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
                   </Offsets>
                   <CheatEntries>
                     <CheatEntry>
-                      <ID>1337027850</ID>
+                      <ID>1337027904</ID>
                       <Description>"First Active Frame 2"</Description>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>4 Bytes</VariableType>
@@ -1016,7 +1017,7 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
                   </CheatEntries>
                 </CheatEntry>
                 <CheatEntry>
-                  <ID>1337027851</ID>
+                  <ID>1337027905</ID>
                   <Description>"Last Active Frame"</Description>
                   <Options moRecursiveSetValue="1" moAlwaysHideChildren="1"/>
                   <ShowAsSigned>0</ShowAsSigned>
@@ -1028,7 +1029,7 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
                   </Offsets>
                   <CheatEntries>
                     <CheatEntry>
-                      <ID>1337027852</ID>
+                      <ID>1337027906</ID>
                       <Description>"Last Active Frame 2"</Description>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>4 Bytes</VariableType>
@@ -1041,7 +1042,7 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
                   </CheatEntries>
                 </CheatEntry>
                 <CheatEntry>
-                  <ID>1337027853</ID>
+                  <ID>1337027907</ID>
                   <Description>"Power Crush Bool"</Description>
                   <DropDownList DisplayValueAsItem="1">0:None
 1:Power Crush
@@ -1054,7 +1055,7 @@ Polaris-Win64-Shipping.exe+29D1E19: 48 33 CC                 - xor rcx,rsp
                   </Offsets>
                 </CheatEntry>
                 <CheatEntry>
-                  <ID>1337027854</ID>
+                  <ID>1337027908</ID>
                   <Description>"Total Recovery Frames"</Description>
                   <ShowAsSigned>0</ShowAsSigned>
                   <VariableType>4 Bytes</VariableType>
