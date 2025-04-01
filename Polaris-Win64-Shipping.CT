@@ -410,7 +410,7 @@ f.FormStyle = 'fsSystemStayOnTop' -- Keep the form on top
 f.Left = 60
 f.Top = 270
 f.Width = 400 -- Increased width to accommodate longer text
-f.Height = 450 -- Height remains unchanged
+f.Height = 500 -- Height remains unchanged
 f.Caption = "" -- Remove caption
 
 -- Make the form draggable
@@ -476,6 +476,9 @@ local csLabel = createTextLabel(f, 310, "cs: 0~", 40)
 local pcOutlineLabel = createOutlineLabel(f, 370, "pc: 0~", 40)
 local pcLabel = createTextLabel(f, 370, "pc: 0~", 40)
 
+local dmgOutlineLabel = createOutlineLabel(f, 430, "dmg: ", 40)
+local dmgLabel = createTextLabel(f, 430, "dmg: ", 40)
+
 -- Adjust height of labels slightly
 delayLabel.Height = 70
 delayOutlineLabel.Height = 70
@@ -511,6 +514,7 @@ t.OnTimer = function()
   local delay = readInteger('[pcFinderPTR]+23F8') or 0 -- Delay Value
   local cs = readInteger('csPTR') or 0 -- Read the cs status
   local pc = readBytes('[pcFinderPTR]+9F8', 1, false) or 0 -- Read the pc status as a byte
+  local dmg = readInteger('[pcFinderPTR]+504') or 0
 
   -- Read the transition value from memory
   local transition = readInteger('[[pcFinderPTR]+3E0]+5C+70') or 0 -- Transition address
@@ -547,6 +551,9 @@ t.OnTimer = function()
   local combinedValue = valuePCFinder + delay
   delayLabel.Caption = "delay: " .. delay .. "-" .. combinedValue
   delayOutlineLabel.Caption = delayLabel.Caption
+
+  dmgLabel.Caption = "dmg: " .. dmg
+  dmgOutlineLabel.Caption = dmgLabel.Caption
 
   -- Detect when cs occurs and capture the start frame
   if cs == 1 then
